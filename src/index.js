@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
+import OfferService from './service/offer-service'
 const app = express();
-const { findOffersWithCriteria } = require('./offer-service');
 
 app.get('/v2/criteria', function (req, res) {
-  findOffersWithCriteria();
+  OfferService.handle();
   res.send('Hello World!')
 })
 
@@ -19,6 +19,4 @@ app.delete('/user', function (req, res) {
   res.send('Got a DELETE request at /user');
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-}) 
+app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
