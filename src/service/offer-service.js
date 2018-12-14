@@ -1,6 +1,5 @@
-import OfferApi from '../api/offer-api';
 import EsdApi from '../api/esd-api';
-
+import TokenStore from '../api/token-store';
 
 class OfferService {
   
@@ -8,17 +7,8 @@ class OfferService {
   }
 
   handle(filters){
-    const promiseToken = new Promise(function(resolve) {
-        const token = EsdApi.getToken();
-        if(token){
-          resolve(token);
-        }
-    });
-    promiseToken.then( token => {
-        console.log("ttt",token);
-      //OfferApi.findByCriteriaV1(token);
-    });
-
+      EsdApi.getToken();
+      console.log("store=",TokenStore.get());
   }
 
 }

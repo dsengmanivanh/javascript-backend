@@ -1,8 +1,14 @@
 import rp from 'request-promise-native';
+import TokenStore from './token-store';
+import Token from './token';
 
 class EsdAPI{
 
-    getToken() {
+    getToken(){
+        this.refreshToken();
+    }
+
+    refreshToken() {
         const options = {
             method: 'POST',
             url: 'https://entreprise.pole-emploi.fr/connexion/oauth2/access_token',
@@ -24,14 +30,18 @@ class EsdAPI{
         rp(options)
             .then(function (json) {
                 const res = JSON.parse(json);
-                console.info("token:" + res.access_token);
-                return res.access_token;
+                const timeNow =  new Date(Date.now()).getTime();
+                const expirationDate = timeNow + res.expires_in;
+                if(TokenStore.get() === undefined || TokenStore.get()._accessToken === 0  || expirationDate > TokenStore.get()._accessTokenExpirationDate){
+                    let token = new Token(res.access_token,expirationDate);
+                    TokenStore.add(token);
+                }
             })
             .catch(function (err) {
-                console.error("Unable to send message:");
+                console.error("Unable to send message",err);
             });
     }
 }
 
 
-module.exports = new EsdAPI();
+module.exports = EsdAPI;
