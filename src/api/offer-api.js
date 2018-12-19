@@ -1,27 +1,44 @@
 import rp from 'request-promise-native';
+import config from '../../config';
+import TokenStore from "../store/token-store";
 
-class OfferAPI{
+class OfferAPI {
 
-  findByCriteriaV1(token){
-    const options = { method: 'GET',
-        url: 'https://api.emploi-store.fr/partenaire/offresdemploi/v2/offres/search',
-        qs:
-            { qualification: '0',
-                motsCles: 'informatique',
-                commune: '51069,76322,46083,12172,28117',
-                origineOffre: '2%0A' },
-        headers:
-            { 'Postman-Token': token,
-                'cache-control': 'no-cache' } };
-    rp(options)
-    .then(function (res) {
-        console.log(res);
-    })
-    .catch(function (err) {
-      console.log('error1');
-    });
-  }
+    findByCriteriaV2(query) {
+        let options = {
+            method: 'GET',
+            url: config.offer.url,
+            qs:
+                {
+                    commune: '75101',
+                    codeRome:'D1102'
+                },
+            headers:
+                {
+                    'Authorization': 'Bearer ',
+                    'cache-control': 'no-cache'
+                }
+        };
+        options.headers["Authorization"] = 'Bearer '+ TokenStore.get()._accessToken;
+        if(query.contractType !== null ){
+            options.qs["typeContrat"] = query.contractType;
+        }
+        if(query.commune !== null ){
+            options.qs["commune"] = query.commune;
+        }
+        if(query.codeRome !== null ){
+            options.qs["codeRome"] = query.codeRome;
+        }
+        console.log("options=", options);
+        return rp(options)
+            .then(function (res) {
+                return res;
+            })
+            .catch(function () {
+                return "error";
+            });
+    }
 }
 
 
-module.exports = new OfferAPI();
+module.exports = OfferAPI;
