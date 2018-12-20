@@ -1,8 +1,9 @@
 class Query{
-    constructor(commune = '75101',codeRome = 'D1102',contractType = 'CDI'){
+    constructor(commune = '75101',codeRome = 'D1102',contractType = 'CDI', version = 2){
         this._commune = commune;
         this._codeRome = codeRome;
         this._contractType =contractType;
+        this._version = version;
     }
 
     get commune() {
@@ -27,6 +28,15 @@ class Query{
 
     set contractType(value) {
         this._contractType = value;
+    }
+
+
+    get version() {
+        return this._version;
+    }
+
+    set version(value) {
+        this._version = value;
     }
 }
 
