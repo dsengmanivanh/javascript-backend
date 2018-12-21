@@ -6,9 +6,17 @@
 <body>
 <pe-offres-emploi></pe-offres-emploi>
 <script>
+    var parsedUrl = new URL(window.location.href);
+    var token = parsedUrl.searchParams.get("token");
+    console.log(token);
+
     var macarte = document.querySelector('pe-offres-emploi');
     macarte.options = {};
-    macarte.token = "6c2ff781-fa39-4ac0-a06f-869bc89e95aa";
+    if(token){
+        macarte.token = token;
+    }else{
+        macarte.token = "faae8247-f60d-4b44-bf0d-c3c90201b7b9";
+    }
 </script>
 </body>
 </html>

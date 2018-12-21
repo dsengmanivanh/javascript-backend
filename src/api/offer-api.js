@@ -35,6 +35,7 @@ class OfferAPI {
         if (query.codeRome !== null) {
             options.qs["codeRome"] = query.codeRome;
         }
+        console.log("v2=",options);
         return rp(options)
             .then(function (res) {
                 return res;
@@ -82,6 +83,7 @@ class OfferAPI {
         if (query.codeRome !== null) {
             options.body.criterias["romeProfessionCardCode"] = query.codeRome;
         }
+        console.log("v1=",options);
         return rp(options)
             .then(function (res) {
                 return res;

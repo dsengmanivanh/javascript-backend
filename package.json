@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && node dist/app.js",
-    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules"
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules && cp widget.html dist/"
   },
   "author": "",
   "license": "ISC",

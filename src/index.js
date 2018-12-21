@@ -14,23 +14,20 @@ app.get('/', function (req, res) {
     link.codeRome.boucher = "D1101";
     link.codeRome.conducteur = "A1101";
 
-    link.criteria = {};
-    link.criteria.default = "commune = '75101',codeRome = 'D1102',contractType = 'CDI'";
-    link.criteria.cdd = "http://localhost:3000/v2/criteria?typeContrat=CDD";
-    link.criteria.cdi = "http://localhost:3000/v2/criteria?typeContrat=CDI";
-    link.criteria.codeRome = "http://localhost:3000/v2/criteria?codeRome=D1101";
-    link.criteria.contractType = "http://localhost:3000/v2/criteria?contractType=CDI";
+    link.v2 = {};
+    link.v2.default = "commune = '75101',codeRome = 'D1102',contractType = 'CDI'";
+    link.v2.cdi = "http://"+req.headers.host+"/v2/criteria?typeContrat=CDI&codeRome=D1101";
 
-    link.criteriaold = {};
-    link.criteriaold.default = "commune = '75101',codeRome = 'D1102',contractType = 'CDI'";
-    link.criteriaold.cdd = "http://localhost:3000/v1/criteria?typeContrat=CDD";
-    link.criteriaold.cdi = "http://localhost:3000/v1/criteria?typeContrat=CDI";
-    link.criteriaold.codeRome = "http://localhost:3000/v1/criteria?codeRome=D1101";
-    link.criteriaold.contractType = "http://localhost:3000/v1/criteria?contractType=CDI";
+    link.v1 = {};
+    link.v1.default = "commune = '75101',codeRome = 'D1102',contractType = 'CDI'";
+    link.v1.cdi = "http://"+req.headers.host+"/v1/criteria?typeContrat=CDI&codeRome=D1101";
 
 
     link.token = {};
-    link.token.url = "http://localhost:3000/v2/token";
+    link.token.url = "http://"+req.headers.host+"/v2/token";
+
+    link.widget = {};
+    link.widget.onlyfirefox = "http://"+req.headers.host+"/v2/widget?token=";
 
     res.send(link);
 });
@@ -55,6 +52,12 @@ app.get('/v2/token', function (req, res) {
             res.send(JSON.stringify(value));
         }
     );
+});
+
+app.get('/v2/widget', function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', 'http'+req.headers.host);
+    const dir = __dirname.replace("src","");
+    res.sendFile(dir+'/widget.html');
 });
 
 
