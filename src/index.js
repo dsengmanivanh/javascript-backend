@@ -56,8 +56,6 @@ app.get('/v2/token', function (req, res) {
 
 app.get('/v2/widget', function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', 'http'+req.headers.host);
-    // const dir = __dirname.replace("src","");
-    // res.sendFile(dir+'/widget.html');
     res.sendfile('widget.html');
 });
 

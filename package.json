@@ -4,9 +4,10 @@
   "description": "Poc with Api Offer v2 and v1",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha 'src/**/*.spec.js' --compilers js:babel-register",
     "start": "npm run build && node dist/app.js",
-    "build": "babel ./ --out-dir dist/ --ignore ./node_modules && cp widget.html dist/"
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules && cp widget.html dist/",
+    "prod": "babel ./ --out-dir dist/ --ignore ./node_modules && cp widget.html dist/"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-preset-es2015": "^6.24.1"
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.2"
   }
 }
